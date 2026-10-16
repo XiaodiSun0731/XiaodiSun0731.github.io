@@ -1,4 +1,4 @@
-const CACHE_NAME = "qixin-dongnian-v4-ios27";
+const CACHE_NAME = "qixin-dongnian-v5-ios27-webview";
 const CORE_ASSETS = [
   "/",
   "/index.html",

@@ -17,19 +17,123 @@
       name="description"
       content="以此刻阴历月日与时辰起课，记录所问、结果与后来验证。"
     />
-    <link rel="manifest" href="/manifest.webmanifest?v=4" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=4" />
+    <link rel="manifest" href="/manifest.webmanifest?v=5" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=5" />
     <link
       rel="apple-touch-icon-precomposed"
       sizes="180x180"
-      href="/apple-touch-icon-precomposed.png?v=4"
+      href="/apple-touch-icon-precomposed.png?v=5"
     />
-    <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png?v=4" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png?v=5" />
+    <style>
+      .boot-fallback {
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: max(32px, env(safe-area-inset-top)) 28px max(32px, env(safe-area-inset-bottom));
+        box-sizing: border-box;
+        text-align: center;
+        color: #0e3158;
+        background: #fefbf6;
+        font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Noto Serif SC", serif;
+      }
+      .boot-fallback::before,
+      .boot-fallback::after {
+        content: "";
+        position: fixed;
+        z-index: 0;
+        width: 62vw;
+        height: 62vw;
+        border: 22px solid rgba(39, 112, 158, 0.12);
+        border-radius: 44% 56% 54% 46%;
+        filter: blur(2px);
+        pointer-events: none;
+      }
+      .boot-fallback::before { top: -28vw; right: -24vw; transform: rotate(28deg); }
+      .boot-fallback::after { bottom: -28vw; left: -24vw; border-color: rgba(229, 102, 73, 0.12); }
+      .boot-fallback > * { position: relative; z-index: 1; }
+      .boot-mark {
+        display: grid;
+        place-items: center;
+        width: 88px;
+        height: 88px;
+        margin-bottom: 6px;
+        border: 2px solid rgba(229, 102, 73, 0.58);
+        border-radius: 50%;
+        color: #e56649;
+        font-size: 36px;
+      }
+      .boot-fallback h1 { margin: 0; font-size: 28px; font-weight: 500; letter-spacing: 0.08em; }
+      .boot-fallback p { max-width: 300px; margin: 0; color: #748493; font: 400 15px/1.75 -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif; }
+      .boot-fallback button {
+        min-width: 128px;
+        min-height: 44px;
+        margin-top: 8px;
+        border: 0;
+        border-radius: 22px;
+        background: #e56649;
+        color: white;
+        font: 500 16px/1 -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+      }
+      .boot-status { display: flex; align-items: center; gap: 8px; }
+      .boot-status i {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #e56649;
+        animation: boot-pulse 1.2s ease-in-out infinite alternate;
+      }
+      @keyframes boot-pulse { to { opacity: 0.28; transform: scale(0.72); } }
+    </style>
     <title>起心动念</title>
-    <script type="module" crossorigin src="/assets/index-CFecdoof.js"></script>
+    <script type="module" crossorigin src="/assets/index-BiWmxZGR.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-COIUmPrW.css">
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <main class="boot-fallback" aria-live="polite">
+        <div class="boot-mark" aria-hidden="true">念</div>
+        <h1>起心动念</h1>
+        <p class="boot-status"><i aria-hidden="true"></i>正在打开此刻</p>
+      </main>
+    </div>
+    <script>
+      (function () {
+        if (!("ResizeObserver" in window)) {
+          window.ResizeObserver = function () {
+            this.observe = function () {};
+            this.unobserve = function () {};
+            this.disconnect = function () {};
+          };
+        }
+
+        function showRecovery() {
+          var root = document.getElementById("root");
+          if (!root || root.querySelector(".app-shell")) return;
+          root.innerHTML =
+            '<main class="boot-fallback boot-fallback-error" role="alert">' +
+            '<div class="boot-mark" aria-hidden="true">念</div>' +
+            '<h1>页面没有完全打开</h1>' +
+            '<p>请刷新一次；若仍停在这里，请点右下角指南针，在 Safari 中打开。</p>' +
+            '<button type="button" onclick="window.location.reload()">重新加载</button>' +
+            '</main>';
+        }
+
+        window.addEventListener("error", function (event) {
+          if (event && event.target && event.target !== window) showRecovery();
+        }, true);
+        window.setTimeout(showRecovery, 8000);
+      })();
+    </script>
+    <noscript>
+      <main class="boot-fallback" role="alert">
+        <div class="boot-mark" aria-hidden="true">念</div>
+        <h1>需要启用 JavaScript</h1>
+        <p>请在 Safari 中打开此链接，并允许网页运行脚本。</p>
+      </main>
+    </noscript>
   </body>
 </html>
